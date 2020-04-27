@@ -1,34 +1,5 @@
 #!/bin/bash
 
-#Returns the the data for accession number AF086833.2 in the FASTA format:
-curl -s https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=AF086833.2\&db=nuccore\&rettype=fasta | head
-
-efetch -db=nuccore -format=gb -id=AF086833 | head
-
-# Accession number AF086833 in Genbank format.
-efetch -db=nuccore -format=gb -id=AF086833 > AF086833.gb
-
-# Accession number AF086833 in Fasta format.
-efetch -db=nuccore -format=fasta -id=AF086833 > AF086833.fa
-
-# efetch can take additional parameters and select a section of the sequence.
-efetch -db=nuccore -format=fasta -id=AF086833 -seq_start=1 -seq_stop=3
-
-#efetch can produce the sequence from reverse strands:
-efetch -db=nuccore -format=fasta -id=AF086833 -seq_start=1 -seq_stop=5 -strand=1
-efetch -db=nuccore -format=fasta -id=AF086833 -seq_start=1 -seq_stop=5 -strand=2
-
-#entrez can search for the data associated with an accession number.
-#These can be located in published papers.
-esearch -help
-
-esearch -db nucleotide -query PRJNA257197 | efetch -format=fasta > genomes.fa
-
-esearch -db protein -query PRJNA257197 | efetch -format=fasta > proteins.fa
-
-# the xtract tool in Entrez Direct allows navigating and selecting parts of an XML file.
-efetch -db taxonomy -id 9606,7227,10090 -format xml | xtract -Pattern Taxon -first TaxId ScientificName GenbankCommonName Division
-
 
 # Make a new directory for the reference genomes.
 mkdir -p ~/refs
